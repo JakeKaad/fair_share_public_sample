@@ -1,0 +1,13 @@
+<h1>Edit hour</h1>
+<%= bootstrap_form_for([@family, @hour]) do |f| %>
+  <%= f.date_field :date_earned, class: "hours-control", value: Date.today, help: "Cannot be in the future" %>
+  <%= f.collection_select :member_id, @family.members.uniq, :id, :full_name, help: "Who shared hours?"%>
+  <div class="form-group">
+    <%= label_tag "Activity" %>
+    <%= select_tag "activity",options_for_select(@activities.collect{ |a| [a.name,a.id]} ), class: "form-control", label: "Category", prompt: "Choose an activity", help: "What did your family do?"%>
+    <span class="help-block">Choose an activity</span>
+  </div>
+  <%= f.collection_select :subactivity_id, @subactivities, :id, :name, prompt: "Choose activity detail", help: "Add activity detail here." %>
+  <%= f.text_field :quantity, class: "hours-control", skip_label: true, help: "Record your hours (can't be 0)"%>
+  <%= f.submit "Update hours", class: "btn btn-info" %>
+<% end %>

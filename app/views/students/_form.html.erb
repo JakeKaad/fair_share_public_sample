@@ -1,0 +1,7 @@
+<%= bootstrap_form_for [@family, @student] do |f| %>
+  <%= f.text_field :first_name %>
+  <%= f.text_field :last_name %>
+  <%= f.collection_select :classroom_id, Classroom.all, :id, :name %>
+  <%= f.select :grade, options_for_select(Student.GRADES, selected: @student.grade) %>
+  <%= f.submit class: "btn btn-info" %>
+<% end %>

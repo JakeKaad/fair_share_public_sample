@@ -1,0 +1,5 @@
+<%= bootstrap_form_for [activity] do |f| %>
+  <%= f.hidden_field :category_id, value: category.id %>
+  <%= f.text_field :name %>
+  <%= f.submit class: "btn btn-info" %>
+<% end %>

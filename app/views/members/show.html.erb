@@ -1,0 +1,57 @@
+<div class="member-area text-center col-xs-12 col-md-12 col-lg-12">
+  <h1><%= @member.first_name %> <%= @member.last_name %></h1>
+  <%= @member.street_address %>
+  <%= @member.city %>,
+  <%= @member.state %>
+  <%= @member.zip %><br>
+  <%= @member.email %><br>
+  <%= number_to_phone(@member.phone) %><br>
+  <%= button_to "Edit information", edit_member_path(@member), class: 'btn btn-info', method: :get %>
+  <br/>
+  <%= button_to "Add hours", family_hours_path(@family), class: 'btn btn-info', method: :get %>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+  <hr>
+  <h3>Family of:</h3>
+  <% @member.family.students.each do |student| %>
+    <h4> <%= student.first_name + " " + student.last_name %> </h4>
+  <% end %>
+  <hr>
+  <h3>Areas of Interest:</h3>
+  <p>How would you like to be involved at FMES this year?<p>
+
+  <% @categories.each do |category| %>
+    <% if category.name != "Incentives" %>
+      <div class="hidden-xs hidden-sm col-md-4 col-lg-4">
+        <h4><%= category.name %></h4>
+        <div id="member-activities" class="well activity-well">
+          <br/>
+            <div class='btn-group'>
+              <%= link_to "Select All", add_all_activities_member_path(@member, category_id: category.id),  class: "btn btn-xs btn-info",  method: :post, remote: true %>
+              <%= link_to "Remove All", remove_all_activities_member_path(@member, category_id: category.id),  class: "btn btn-xs btn-danger",  method: :post, remote: true %>
+            </div>
+            <%= collection_check_boxes :activity, :ids, category.activities, :id, :name do |b| %>
+              <% activity = Activity.find(b.value) %>
+              <% b.label(class: "checkbox") { b.check_box(class: "checkbox activity-checkbox category-#{category.id}-checkbox", data: { member_id: @member.id}, checked: @member.activities.include?(activity) ? true : false ) + b.text}%>
+            <% end %>
+        </div>
+     </div>
+
+    <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">
+        <h4><%= category.name %></h4>
+        <div id="member-activities" class="well activity-well">
+          <br/>
+          <div class='btn-group'>
+            <%= link_to "Select All", add_all_activities_member_path(@member, category_id: category.id),  class: "btn btn-xs btn-info",  method: :post, remote: true %>
+            <%= link_to "Remove All", remove_all_activities_member_path(@member, category_id: category.id),  class: "btn btn-xs btn-danger",  method: :post, remote: true %>
+          </div>
+          <%= collection_check_boxes :activity, :ids, category.activities, :id, :name do |b| %>
+            <% activity = Activity.find(b.value) %>
+            <% b.label(class: "checkbox") { b.check_box(class: "checkbox activity-checkbox", data: { member_id: @member.id}, checked: @member.activities.include?(activity) ? true : false ) + b.text}%>
+          <% end %>
+        </div>
+    </div>
+    <% end %>
+  <% end %>
+</div>

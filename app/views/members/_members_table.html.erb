@@ -1,0 +1,23 @@
+<table class="table table-striped">
+<ul class="nav nav-tabs nav-justified">
+  <li class="<%= "active" if params[:tab].nil? %>"><%= link_to "Active", members_path, class: "green" %></a></li>
+  <li class="<%= "active" if params[:tab] == "archived" %>"><%= link_to "Archived", members_path(nil, tab: "archived"), class: "green" %></a></li>
+  <li class="<%= "active" if params[:tab] == "all" %> "><%= link_to "All", members_path(nil, tab: "all"), class: "green" %></a></li>
+<ul>
+  <tr>
+    <th>Family member Name</th>
+    <th></th>
+  </tr>
+  <% @members.each do |member| %>
+    <tr>
+      <td class="col-sm-7"><%= link_to member.full_name, member.family, class: "green no-decor" %></td>
+      <td>
+        <%= link_to "Edit", edit_member_path(member), class: "btn btn-info btn-xs col-sm-2", method: :get %>
+        <% if member.user && !member.user.registered? %>
+          <%= link_to "Invite", invite_member_path(member), class: "btn btn-primary btn-xs col-sm-2", remote: true, id: "#{member.id}-invite-button" %>
+        <% end %>
+        <%= button_to member.archived ? "Unarchive" : "Archive", archive_member_path(member, tab: params[:tab]), class: "btn btn-warning btn-xs", remote: :true %>
+      </td>
+    </tr>
+  <% end %>
+</table>

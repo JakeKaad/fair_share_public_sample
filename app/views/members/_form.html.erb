@@ -1,0 +1,12 @@
+<%= bootstrap_form_for [@family, @member] do |f| %>
+  <%= f.text_field :first_name %>
+  <%= f.text_field :last_name %>
+  <%= f.select :relationship_to_student, options_for_select(Member.RELATIONSHIPS, selected: @member.relationship_to_student) %>
+  <%= f.text_field :street_address %>
+  <%= f.text_field :city %>
+  <%= f.select :state, options_for_select(us_states, "OR") %>
+  <%= f.text_field :zip %>
+  <%= f.email_field :email %>
+  <%= f.phone_field :phone %>
+  <%= f.submit class: "btn btn-info" %>
+<% end %>

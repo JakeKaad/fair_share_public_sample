@@ -1,0 +1,15 @@
+<h2>Categories</h2>
+<ul class="list-unstyled">
+  <% @categories.each do |category| %>
+    <li><h4 ><%= link_to "#{category.name}", category, class: "no-decor, green" %> </h4></li>
+  <% end %>
+</ul>
+<hr>
+<div id="category-form">
+  <h4>Add a new category: </h4>
+  <%= render 'form', category: @category %>
+</div>
+
+<%= link_to admin_path(current_admin) do%>
+  <button type="button" class="btn btn-success navbar-btn pull-left">Back</button>
+<% end %>

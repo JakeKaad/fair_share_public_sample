@@ -1,0 +1,23 @@
+Dear <%= @user.full_name %>,
+
+<p>
+  Welcome to the Fair Share program at the Franciscan Montessori Earth School!
+  <br>
+  This year we have created a system to track and promote the FMES spirit of sharing.
+  Use the link below to complete your sign up.
+  <br>
+  You will earn 1 Fair Share hour for your family
+  just for logging in for the first time. What could be easier?
+  <br>
+  If you have any questions about the program or technical issues creating your account, please don't hesitate to contact me!
+</p>
+
+<%= link_to "Accept this invitation", register_with_token_url(@user.registration_token) %>
+<br>
+Sincerely,
+Rachel
+<br>
+Rachel D. Arnold<br>
+Volunteer Coordinator<br>
+503.760.8220 x211<br>
+rarnold@fmes.org

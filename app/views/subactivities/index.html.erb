@@ -1,0 +1,25 @@
+<div>
+  <h2>Subactivities by Activity</h2>
+  <%= link_to admin_path(current_admin) do%>
+    <button type="button" class="btn btn-success">Back</button>
+  <% end %></h2>
+</div>
+<% @activities.each do |activity| %>
+  <ul class="col-md-5 well list-unstyled activity-well">
+  <h3 class="green"><%= link_to "#{activity.name}", activity %> </h3></li>
+    <% activity.subactivities.each do |subactivity| %>
+      <li><%= link_to "#{subactivity.name}", subactivity, class: "green no-decor" %> </li>
+    <% end %>
+    <br>
+    <button id="show-subactivity-form-<%= activity.id %>" class="btn-sm btn-info">Add Subactivity</button>
+    <div id="subactivity-form-<%= activity.id %>" class="subactivity-form">
+      <h4>New <%= activity.name %> subactivity: </h4>
+      <%= bootstrap_form_for [@subactivity] do |f| %>
+        <%= f.hidden_field :activity_id, value: activity.id %>
+        <%= f.text_field :name %>
+        <%= f.text_field :assigned_hours %>
+        <%= f.submit class: "btn btn-info" %>
+      <% end %>
+    </div>
+  </ul>
+<% end %>

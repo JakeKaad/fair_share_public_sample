@@ -1,0 +1,20 @@
+<h2><%= @category.name %> Activities</h2>
+<ul class="list-unstyled" id="activity_list">
+  <%= render 'activity_list', activities: @activities %>
+</ul>
+<br>
+
+<button id="show-activity-form" class="btn-sm btn-info">Add activity</button>
+<div id="activity-form" class="activity-form">
+  <h4>New Activity: </h4>
+  <%= render 'activities/form', activity: @activity, category: @category %>
+</div>
+<div>
+  <%= link_to categories_path, class: "col-xs-1" do %>
+    <button type="button" class="btn btn-success navbar-btn">Back</button>
+  <% end %>
+  <%= link_to edit_category_path(@category), class: "col-xs-1", id: "edit-category" do %>
+    <button type="button" class="btn btn-success navbar-btn">Edit</button>
+  <% end %>
+  <%= button_to "Delete", archive_category_path(@category), class: "btn btn-warning navbar-btn" %>
+</div>

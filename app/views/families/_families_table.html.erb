@@ -1,0 +1,17 @@
+<table class="table table-striped">
+<ul class="nav nav-tabs nav-justified">
+  <li class="<%= "active" if params[:tab].nil? %>"><%= link_to "Active", families_path, class: "green" %></a></li>
+  <li class="<%= "active" if params[:tab] == "archived" %>"><%= link_to "Archived", families_path(nil, tab: "archived"), class: "green" %></a></li>
+  <li class="<%= "active" if params[:tab] == "all" %>"><%= link_to "All", families_path(nil, tab: "all"), class: "green" %></a></li>
+<ul>
+  <tr>
+    <th>Family Name</th>
+    <th></th>
+  </tr>
+  <% @families.each do |family| %>
+    <tr>
+      <td class="col-md-7"><%= link_to family.name, family, class: "green no-decor" %></td>
+      <td><%= button_to family.archived ? "Unarchive" : "Archive", archive_family_path(family, tab: params[:tab]), class: "btn btn-xs btn-warning", remote: :true %></td>
+    </tr>
+  <% end %>
+</table>

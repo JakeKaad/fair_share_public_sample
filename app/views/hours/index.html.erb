@@ -1,0 +1,140 @@
+<div class="container">
+  <div class="header-area">
+    <div class="row">
+      <div class="family-member-area text-center col-sm-12 col-md-12 col-lg-12">
+        <h1>
+          <%= current_user.full_name  if current_user %>
+          <span class="hidden-md hidden-lg pull-right green">
+            <%= @hours.sum(:quantity) %> hrs shared
+          </span>
+        </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="family-area hidden-xs hidden-sm col-md-6 col-lg-6">
+        <h1> Family of: </h1>
+        <p>
+          <% @family.students.each do |student| %>
+            <h4> <%= student.first_name + " " + student.last_name %> </h4>
+          <% end %>
+        </p>
+      </div>
+      <div class="hours-display-area hidden-xs hidden-sm col-md-6 col-lg-6 pull-right">
+        <h2>Fair Share Hours:</h2>
+        <h1 class="green">
+          <%= @hours.sum(:quantity) %> shared <br>
+        </h1>
+        <h4 class="green">
+          <% if @hours.sum(:quantity) < 40 %>
+            <%= 40-@hours.sum(:quantity) %> yet to share
+          <% else %>
+            <%= (40-@hours.sum(:quantity)).abs %> to donate
+          <% end %>
+        </h4>
+      </div>
+    </div>
+  </div>
+
+  <div class = "hours-log hidden-xs hidden-sm col-md-12 col-lg-12">
+    <%= bootstrap_form_for [@family, @hour], layout: :inline, skip_label: true, label_errors: true do |f| %>
+    <table class="table table-striped">
+      <tr class="green">
+        <th>Date of Activity</th>
+        <th>Family Member</th>
+        <th>Activity</th>
+        <th>Detail</th>
+        <th>Hours Shared</th>
+        <th>Logged By</th>
+      </tr>
+      <tr>
+        <%= f.hidden_field :submitted_by_id, class: "hours-control", value: current_user ? current_user.id : 0 - current_admin.id %>
+        <td><%= f.date_field :date_earned, class: "hours-control", skip_label: true, value: Date.today, help: "Cannot be in the future" %> </td>
+        <td><%= f.collection_select :member_id, @members, :id, :full_name, skip_label: true, help: "Who shared hours?"%> </td>
+        <td>
+          <div class="form-group">
+            <%= select_tag "activity",options_for_select(@activities.collect{ |a| [a.name,a.id]} ), class: "form-control"%>
+            <span class="help-block">Choose an activity</span>
+          </div>
+        </td>
+        <td><%= f.collection_select :subactivity_id, @subactivities, :id, :name, skip_label: true, prompt: "Choose activity detail", help: "Add activity detail here." %> </td>
+        <td><%= f.text_field :quantity, class: "hours-control", skip_label: true, help: "Record your hours (can't be 0)"  %> </td>
+        <td><%= f.submit "Add hours", class: "btn btn-info" %> </td>
+      </tr>
+      <% @hours.each do |hour| %>
+        <tr>
+          <td> <%= hour.formatted_date_earned %></td>
+          <td> <%= hour.member.full_name %></td>
+          <td> <%= hour.subactivity.activity.name %></td>
+          <td> <%= hour.subactivity.name %></td>
+          <td> <%= hour.quantity %></td>
+          <td> <%= hour.submitted_by ? hour.submitted_by.full_name : "FMES" %></td>
+          <td>
+            <div class="btn-group">
+                <%= link_to "Edit", edit_hour_path(hour), class: "btn btn-warning btn-xs" %>
+                <%= link_to "Delete", family_hour_path(@family, hour),
+                                 data: {:confirm => "Are you sure? This will permanently delete these hours.",
+                                 method: "delete"},
+                                 class: "btn btn-danger btn-xs" %>
+            </div>
+          </td>
+        </tr>
+       <% end %>
+      <% end %>
+    </table>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">
+    <%= bootstrap_form_for [@family, @hour], layout: :inline, skip_label: true do |f| %>
+      <table class="table table-striped">
+        <tr>
+          <th>Date of Activity</th>
+        </tr>
+        <tr>
+          <td>
+            <%= f.date_field :date_earned, class: "hours-control", skip_label: true, value: Date.today %>
+          </td>
+        </tr>
+        <tr>
+          <th>Family Member</th>
+        </tr>
+        <tr>
+          <td>
+            <%= f.collection_select :member_id, @family.members, :id, :full_name, skip_label: true %>
+          </td>
+        </tr>
+        <tr>
+          <th>Activity</th>
+        </tr>
+        <tr>
+          <th>
+            <div class="form-group">
+              <%= select_tag "activity",options_for_select(@activities.collect{ |a| [a.name,a.id]} ), class: "form-control" %>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>Detail</th>
+        </tr>
+        <tr>
+          <td>
+            <%= f.collection_select :subactivity_id, @subactivities, :id, :name, skip_label: true %>
+          </td>
+        </tr>
+        <tr>
+          <th>Hours Earned</th>
+        </tr>
+        <tr>
+          <td>
+            <%= f.text_field :quantity, class: "hours-control", skip_label: true  %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= f.submit "Add hours", class: "btn btn-info" %>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+
+</div>

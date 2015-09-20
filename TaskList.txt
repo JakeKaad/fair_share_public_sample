@@ -1,0 +1,79 @@
+=======
+Phase I
+=======
+--add ability to edit/invite/archive family members from families view (Admin)
+--check: does updating email in member profile update user email login?
+
+test on different size screens, diff browsers, diff op sys
+test views with different #s of kids, members
+
+Reporting
+--report Users by Interest
+--report Families with Hours
+
+=================
+PHASE 1.5
+=================
+--Add "Show Users?" property to categories so that they can be shown or hidden in Areas of Interest
+
+=================
+PHASE II Future Features
+=================
+Admin: CRUD upcoming events
+Users: Upcoming events index
+Mailers:  Add upcoming event to monthly mailers
+Add family assistance boolean to families (pending details from MT)
+Monthly email reminder with current hours - create form for admin to provide email text?
+
+Responsiveness: paginate members/students/families index page
+
+Reports
+List of families with >20 hours remaining
+
+
+PHASE III Features
+Sign up for events
+Auto-assign hours after event date passes
+Send thanks for participating email to signed up volunteers
+
+<div class="hours-log col-xs-12 col-sm-12 hidden-md hidden-lg">
+  <table class="table table-striped">
+    <%= bootstrap_form_for [@family, @hour], layout: :inline, skip_label: true do |f| %>
+      <%= f.hidden_field :submitted_by, class: "hours-control", value: current_user ? current_user.id : 0 - current_admin.id %>
+      <tr>
+        <th>Date of Activity</th>
+      </tr>
+      <div class="add-hours-form">
+          <td><%= f.date_field :date_earned, class: "hours-control", skip_label: true  %> </td>
+      </div>
+      <tr>
+        <th>Family Member</th>
+      </tr>
+      <div class="add-hours-form">
+          <td><%= f.collection_select :member_id, @family.members, :id, :full_name, skip_label: true %> </td>
+      </div>
+      <tr>
+        <th>Activity</th>
+      </tr>
+      <div class="add-hours-form">
+        <td><%= f.collection_select :activity_id, @activities, :id, :name, skip_label: true %> </td>
+      </div>
+      <tr>
+        <th>Sub</th>
+      </tr>
+      <div class="add-hours-form">
+        <td>Future Form</td>
+      </div>
+      <tr>
+        <th>Hours Earned</th>
+      </tr>
+      <div class="add-hours-form">
+        <td><%= f.text_field :quantity, class: "hours-control", skip_label: true  %> </td>
+      </div>
+      <tr></tr>
+      <tr class="text-center">
+        <td><%= f.submit "Add hours", class: "btn btn-info" %> </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

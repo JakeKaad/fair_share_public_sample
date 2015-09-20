@@ -1,0 +1,20 @@
+<div>
+  <h2>Activities by Category
+  <%= link_to admin_path(current_admin) do%>
+    <button type="button" class="btn btn-success">Back</button>
+  <% end %></h2>
+</div>
+<% @categories.each do |category| %>
+  <ul class="col-md-5 well list-unstyled activity-well">
+  <li><h3 class="green"><%= link_to "#{category.name}", category %> </h3></li>
+    <% category.activities.order(:name).each do |activity| %>
+      <li><%= link_to "#{activity.name}", activity, class: "green no-decor" %> </li>
+    <% end %>
+    <br>
+    <button id="show-activity-form-<%= category.id %>" class="btn-sm btn-info">Add Activity</button>
+    <div id="activity-form-<%= category.id %>" class="activity-form">
+      <h3>New <%= category.name %> activity: </h3>
+      <%= render 'form', category: category, activity: Activity.new %>
+    </div>
+  </ul>
+<% end %>

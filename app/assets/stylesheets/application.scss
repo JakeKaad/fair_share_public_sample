@@ -1,0 +1,82 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require rails_bootstrap_forms
+ *= require jquery-ui
+ */
+
+ @import "bootstrap-sprockets";
+ @import "bootswatch/lumen/variables";
+ @import "bootstrap";
+ @import "bootswatch/lumen/bootswatch";
+ @import "activities";
+ @import "subactivities";
+ @import "families";
+ @import "hours";
+ @import "members";
+ @import "categories";
+ @import "navbar";
+
+body {
+  background-color: #4A2500;
+  color: #FFF;
+}
+
+h1, h2, h3, h4, h5, p {
+  color: #FFF;
+}
+
+.checkbox {
+  color: black;
+  display: block;
+  line-height: normal;
+}
+
+.btn-info {
+  background-color: #19A319;
+  border-color: #5EBF5E;
+}
+
+.btn-info:hover {
+  background-color: #148214;
+  border-color: #30AC30;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #663300;
+}
+
+.well h3 {
+  color: #333333;
+}
+
+a {
+  color: yellowgreen;
+}
+
+a:hover {
+  color: green;
+}
+
+hr {
+  border-top: 1px solid yellowgreen;
+}
+
+.yellowgreen {
+  color: yellowgreen;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  background-color: #4A2500;
+}
+
+ @import "static_pages";

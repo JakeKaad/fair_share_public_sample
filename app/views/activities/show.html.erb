@@ -1,0 +1,28 @@
+<h2><%= @activity.name %> Subactivities</h2>
+<ul class="list-unstyled">
+  <% @subactivities.each do |subactivity| %>
+    <div class="row subactivity-row">
+      <li class="col-xs-6">
+        <strong class="green"><%= subactivity.name %></strong><em> Hours: <%= subactivity.assigned_hours %></em>
+        <span class="pull-right"><%= button_to "Delete", archive_subactivity_path(subactivity), class: "btn btn-warning btn-xs", id: "delete-subactivity-#{subactivity.id}" %></span>
+        <span class="pull-right"><%= button_to "Edit", edit_subactivity_path(subactivity), class: "btn btn-info btn-xs", id: "edit-subactivity-#{subactivity.id}", method: :get %></span>
+      </li>
+    </div>
+  <% end %>
+</ul>
+
+<br>
+
+<button id="show-subactivity-form-<%= @activity.id %>" class="btn btn-info">Add subactivity</button>
+<div id="subactivity-form-<%= @activity.id %>" class="subactivity-form">
+  <h4>New <%= @activity.name %> subactivity: </h4>
+  <%= render "subactivities/form", subactivity: @subactivity, activity: @activity %>
+</div>
+
+<%= link_to activities_path do %>
+  <button type="button" class="btn btn-success">Back</button>
+<% end %>
+<%= link_to edit_activity_path(@activity), id: "edit-activity" do %>
+  <button type="button" class="btn btn-success">Edit</button>
+<% end %>
+<%= button_to "Delete", archive_activity_path(@activity), class: "btn btn-warning navbar-btn", id: "delete-activity" %>

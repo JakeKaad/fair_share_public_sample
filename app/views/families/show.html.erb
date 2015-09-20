@@ -1,0 +1,54 @@
+<h1> <%= @family.name %> </h1>
+<%= button_to "Add hours", family_hours_path(@family), class: 'btn btn-info', method: :get %>
+<hr>
+
+<h4> Students </h4>
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Grade</th>
+    <th>Classroom</th>
+  </tr>
+  <% @students.each do |student| %>
+    <tr>
+      <td><%= "#{student.first_name} #{student.last_name}" %></td>
+      <td><%= student.grade %></td>
+      <td><%= student.classroom.name if student.classroom%></td>
+    </tr>
+  <% end %>
+</table>
+
+<% if admin_signed_in? %>
+  <button id="show-student-form" class="btn btn-info">Add Student</button>
+  <div id="family-student-form">
+    <h4>Add a new student: </h4>
+    <%= render 'students/form' %>
+  </div>
+<% end %>
+<hr>
+
+<h4> Family Members </h4>
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Relation to Student</th>
+    <th>Phone</th>
+    <th>Email</th>
+  </tr>
+  <% @members.each do |member| %>
+    <tr>
+      <td><%= link_to "#{member.first_name} #{member.last_name}", member %></td>
+      <td><%= member.relationship_to_student %></td>
+      <td><%= member.phone ? member.phone : "" %></td>
+      <td><%= member.email %></td>
+    </tr>
+  <% end %>
+</table>
+
+<% if admin_signed_in? %>
+  <button id="show-member-form" class="btn btn-info">Add Family Member</button>
+  <div id="family-member-form">
+    <h4> Add a new family member: </h4>
+    <%= render 'members/form' %>
+  </div>
+<% end %>

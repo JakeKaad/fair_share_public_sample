@@ -1,0 +1,6 @@
+<%= bootstrap_form_for [subactivity] do |f| %>
+  <%= f.hidden_field :activity_id, value: activity.id %>
+  <%= f.text_field :name %>
+  <%= f.text_field :assigned_hours %>
+  <%= f.submit class: "btn btn-info" %>
+<% end %>

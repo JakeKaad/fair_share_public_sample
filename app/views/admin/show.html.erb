@@ -1,0 +1,30 @@
+<h1 class="text-center"> Control Panel </h1>
+
+<div class="well col-sm-12">
+  <h3>Family controls</h3>
+  <hr>
+  <ul class="list-unstyled">
+    <li><%= link_to "View families", families_path %></li>
+    <li><%= link_to "Add family", new_family_path %></li>
+    <li><%= link_to "View students", students_path %></li>
+    <li><%= link_to "View family members", members_path %></li>
+  </ul>
+</div>
+
+<div class= "well col-sm-12">
+  <h3>Categories and Activities</h3>
+  <hr>
+  <ul class="list-unstyled">
+    <li><%= link_to "View or Add Categories", categories_path %></li>
+    <li><%= link_to "View or Add Activities", activities_path %></li>
+  </ul>
+</div>
+
+<div class="well col-sm-12">
+  <h3>User controls</h3>
+  <hr>
+  <ul class="list-unstyled">
+    <li><%= link_to "Send registration emails", send_registration_emails_path %></li>
+    <li><%= link_to 'Monitoring', sidekiq_web_path %></li>
+  </ul>
+</div>

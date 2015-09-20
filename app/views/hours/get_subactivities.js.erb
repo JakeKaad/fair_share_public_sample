@@ -1,0 +1,5 @@
+$('#hour_subactivity_id').empty();
+<% @subactivities.each do |subactivity| %>
+  $('#hour_subactivity_id').append($('<option value="<%= subactivity.id %>"><%= subactivity.name %></option>'));
+<% end %>
+$('#hour_quantity').val('<%= @subactivities.first.assigned_hours %>')
